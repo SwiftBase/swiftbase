@@ -1,0 +1,6 @@
+http:
+  middlewares:
+    strip-sb-prefix:
+      stripPrefix:
+        prefixes:
+          - "/sb"

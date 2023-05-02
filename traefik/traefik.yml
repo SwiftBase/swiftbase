@@ -1,0 +1,21 @@
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+  dev:
+    address: ":2000"
+
+providers:
+  file:
+    directory: /providers
+    watch: true
+
+api:
+  dashboard: true
+
+accessLog: 
+  format: json
+  fields:
+    defaultMode: keep
+ping: {}

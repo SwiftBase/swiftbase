@@ -1,0 +1,5 @@
+http:
+  routers:
+    api:
+      rule: PathPrefix(`/api`, `/dashboard`)
+      service: "api@internal"

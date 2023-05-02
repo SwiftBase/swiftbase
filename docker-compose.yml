@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  db:
+    image: surrealdb/surrealdb:latest
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/surreal", "isready", "--conn", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - ./data/db:/db/data
+    command: start --user ${SURREAL_USER} --pass ${SURREAL_PASSWORD} --bind 0.0.0.0:8080 file://db/data
+    
+  traefik:
+    image: traefik:v2.9
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - ./traefik/traefik.yml:/traefik.yml
+      - ./traefik/providers:/providers
+    ports:
+      - "2000:2000"
+      - "443:443"
+      - "80:80"
